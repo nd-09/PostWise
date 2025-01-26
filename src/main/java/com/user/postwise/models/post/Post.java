@@ -2,11 +2,12 @@ package com.user.postwise.models.post;
 
 import com.user.postwise.models.comment.AddComments;
 import com.user.postwise.models.comment.Comment;
-import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
+//@Getter
+
 public class Post implements Ipost{
     private Long id;
     private String title;
@@ -18,6 +19,19 @@ public class Post implements Ipost{
        this.title=post.title;
        this.description=post.description;
        this.comments=post.comments;
+   }
+
+   public Long getId() {
+       return this.id;
+   }
+   public String getTitle() {
+       return this.title;
+   }
+   public String getDescription() {
+       return this.description;
+   }
+   public List<Comment> getComments() {
+       return this.comments;
    }
    public static PostBuilder getPostBuilder() {
        return new PostBuilder();
