@@ -1,5 +1,6 @@
 package com.user.postwise.controllers;
 
+import com.user.postwise.dtos.Postdto;
 import com.user.postwise.models.post.Ipost;
 import com.user.postwise.models.post.Post;
 import com.user.postwise.services.PostService;
@@ -9,15 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/posts")
 public class PostController {
     public static HashMap<Long, Post> db=new HashMap<>();
-//    Post p= Post.getPostBuilder()
-//            .setId(1L)
-//            .setTitle("1st post made")
-//            .setDescription("Description must be maintained")
-//            .build();
-//    db.put(p.getId(),p);
     private final PostService postService;
 
     public PostController(PostService postService) {
@@ -27,17 +22,17 @@ public class PostController {
     public Post getPostById(@PathVariable("id") Long id) {
        return postService.getPostById(id);
     }
-    @GetMapping("/posts")
+    @GetMapping()
     public List<Ipost> getAllPost(){
         return postService.getAllPosts();
     }
     @PostMapping
-    public Post createPost(@RequestBody Post post) {
+    public Post createPost(@RequestBody Postdto post) {
 
         return postService.createPost(post);
     }
     @PutMapping
-    public Post updatePost(@RequestBody Post post) {
+    public Post updatePost(@RequestBody Postdto post) {
     // complete update
         return postService.updatePost(post);
     }

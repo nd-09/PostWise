@@ -1,5 +1,6 @@
 package com.user.postwise.services;
 
+import com.user.postwise.dtos.Postdto;
 import com.user.postwise.models.post.Ipost;
 import com.user.postwise.models.post.Post;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class PostService {
         return posts;
     }
 
-    public Post createPost(Post post) {
+    public Post createPost(Postdto post) {
         Post p1= Post.getPostBuilder().setTitle(post.getTitle())
                 .setId(post.getId())
                 .setDescription(post.getDescription())
@@ -37,7 +38,7 @@ public class PostService {
         return p1;
     }
 
-    public Post updatePost(Post post) {
+    public Post updatePost(Postdto post) {
         //complete update
         Post p1= Post.getPostBuilder()
                 .setId(post.getId())
