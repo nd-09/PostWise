@@ -12,15 +12,17 @@ public class Comment extends AddComments {
     private Long postId;
     private String commentary;
     private Random r=new Random();
-    public Comment(Post post,String commentary){
+    public Comment(Post post){
         super(post);
         this.postId = post.getId();
         this.id= r.nextLong();
-        this.commentary = commentary;
     }
 
     public String getCommentary() {
         return this.commentary;
+    }
+    public void setCommentary(String commentary) {
+        this.commentary = commentary;
     }
 
 
@@ -28,4 +30,11 @@ public class Comment extends AddComments {
     public Post addComment(AddComments comment) {
         return post.addComment(comment);  // Use Post's addComment to update the post with the comment.
     }
+    public Long getPostId(){
+        return this.postId;
+    }
+    public Long getId(){
+        return this.id;
+    }
+
 }

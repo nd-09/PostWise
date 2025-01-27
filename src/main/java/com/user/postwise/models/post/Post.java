@@ -40,7 +40,8 @@ public class Post implements Ipost{
     @Override
     public Post addComment(AddComments comment) {
         if(comment.getCommentary()!=null){
-            Comment c=new Comment(this,comment.getCommentary());
+            Comment c=new Comment(this);
+            c.setCommentary(comment.getCommentary());
             comments.add(c);
         }else{
             throw new RuntimeException("Comment is null");
