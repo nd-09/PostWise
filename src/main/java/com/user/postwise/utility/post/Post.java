@@ -1,7 +1,7 @@
-package com.user.postwise.models.post;
+package com.user.postwise.utility.post;
 
-import com.user.postwise.models.comment.AddComments;
-import com.user.postwise.models.comment.Comment;
+import com.user.postwise.utility.comment.AddComments;
+import com.user.postwise.utility.comment.Comment;
 
 import java.util.ArrayList;
 import java.util.List;

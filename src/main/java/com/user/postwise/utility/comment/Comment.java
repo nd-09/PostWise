@@ -1,6 +1,6 @@
-package com.user.postwise.models.comment;
+package com.user.postwise.utility.comment;
 
-import com.user.postwise.models.post.Post;
+import com.user.postwise.utility.post.Post;
 import lombok.Getter;
 
 import java.util.Random;

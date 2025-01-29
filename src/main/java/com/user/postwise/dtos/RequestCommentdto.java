@@ -1,6 +1,6 @@
 package com.user.postwise.dtos;
 
-public class Commentdto {
+public class RequestCommentdto {
     private Long id;
     private Long postId;
     private String commentary;

@@ -1,10 +1,10 @@
 package com.user.postwise.dtos;
 
-import com.user.postwise.models.comment.Comment;
+import com.user.postwise.utility.comment.Comment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Postdto {
+public class RequestPostdto {
     private Long id;
     private String title;
     private String description;
@@ -35,9 +35,3 @@ public class Postdto {
         this.comments = comments;
     }
 }
-
-//inputstr = comp2uter scien1ce world4 rook3s
-//
-//output :
-//
-////csmputer wcience worrd rocks

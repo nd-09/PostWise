@@ -1,9 +1,12 @@
 package com.user.postwise.services;
 
-import com.user.postwise.dtos.Commentdto;
-import com.user.postwise.models.comment.Comment;
-import com.user.postwise.models.post.Post;
+import com.user.postwise.dtos.RequestCommentdto;
+import com.user.postwise.dtos.ResponseCommentdto;
+import com.user.postwise.utility.comment.Comment;
+import com.user.postwise.utility.post.Post;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,20 +15,30 @@ import static com.user.postwise.controllers.PostController.db;
 @Service
 public class CommentService {
 
-    public List<Comment> getCommentsByPostId(Long postId){
+    public List<RequestCommentdto> getCommentsByPostId(Long postId){
         Post p=db.get(postId);
-        return p.getComments();
+        List<RequestCommentdto>response=new ArrayList<>();
+        for(Comment c:p.getComments()){
+            RequestCommentdto r=new RequestCommentdto();
+            r.setCommentary(c.getCommentary());
+            response.add(r);
+
+        }
+        return response;
     }
 
-    public Comment createComment(Commentdto commentary){
+    public ResponseCommentdto createComment(RequestCommentdto commentary){
         Post p=db.get(commentary.getPostId());
         Comment c= new Comment(p);
+        ResponseCommentdto response=new ResponseCommentdto();
         c.setCommentary(commentary.getCommentary());
         p.addComment(c);
-        return c;
+        response.setComment(commentary.getCommentary());
+        response.setResponse("Post created successfully");
+        return response;
     }
 
-    public Commentdto updateComment( Commentdto comment){
+    public RequestCommentdto updateComment(RequestCommentdto comment){
         Post p =db.get(comment.getPostId());
        //got the post by post id and add update the comment to it
        List<Comment> ls=p.getComments();
@@ -40,7 +53,7 @@ public class CommentService {
        }
         return comment;
     }
-    public String deleteComment(Commentdto Comment){
+    public String deleteComment(RequestCommentdto Comment){
         // here since we are using a map as our in-memory db we are not maintaining a separate map for comments
         // else we would be querying the comments table directly using comment id;
         Post p=db.get(Comment.getPostId());

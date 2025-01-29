@@ -1,8 +1,9 @@
 package com.user.postwise.controllers;
 
-import com.user.postwise.dtos.Postdto;
-import com.user.postwise.models.post.Ipost;
-import com.user.postwise.models.post.Post;
+import com.user.postwise.dtos.RequestPostdto;
+import com.user.postwise.dtos.ResponsePostdto;
+import com.user.postwise.utility.post.Ipost;
+import com.user.postwise.utility.post.Post;
 import com.user.postwise.services.PostService;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,20 +20,20 @@ public class PostController {
         this.postService = postService;
     }
     @GetMapping("/{id}")
-    public Post getPostById(@PathVariable("id") Long id) {
+    public ResponsePostdto getPostById(@PathVariable("id") Long id) {
        return postService.getPostById(id);
     }
     @GetMapping()
-    public List<Ipost> getAllPost(){
+    public List<RequestPostdto> getAllPost(){
         return postService.getAllPosts();
     }
     @PostMapping
-    public Post createPost(@RequestBody Postdto post) {
+    public ResponsePostdto createPost(@RequestBody RequestPostdto post) {
 
         return postService.createPost(post);
     }
     @PutMapping
-    public Post updatePost(@RequestBody Postdto post) {
+    public ResponsePostdto updatePost(@RequestBody RequestPostdto post) {
     // complete update
         return postService.updatePost(post);
     }
