@@ -1,21 +1,14 @@
 package com.user.postwise.dtos;
 
-import com.user.postwise.utility.comment.Comment;
+import com.user.postwise.models.Comment;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RequestPostdto {
-    private Long id;
     private String title;
     private String description;
     private List<Comment> comments = new ArrayList<>();
 
-    public Long getId() {
-        return this.id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
     public String getTitle() {
         return this.title;
     }

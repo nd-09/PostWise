@@ -1,6 +1,6 @@
 package com.user.postwise.dtos;
 
-import com.user.postwise.utility.comment.Comment;
+import com.user.postwise.models.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ public class ResponsePostdto {
     private String response;
     private String title;
     private String description;
-    private List<Comment> comments = new ArrayList<>();
+    private List<ResponseCommentdto> comments = new ArrayList<>();
 
     public String getTitle() {
         return this.title;
@@ -23,10 +23,10 @@ public class ResponsePostdto {
     public void setDescription(String description) {
         this.description = description;
     }
-    public List<Comment> getComments() {
+    public List<ResponseCommentdto> getComments() {
         return this.comments;
     }
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<ResponseCommentdto> comments) {
         this.comments = comments;
     }
     public String getResponse() {

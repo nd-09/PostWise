@@ -2,7 +2,6 @@ package com.user.postwise.controllers;
 
 import com.user.postwise.dtos.RequestPostdto;
 import com.user.postwise.dtos.ResponsePostdto;
-import com.user.postwise.utility.post.Ipost;
 import com.user.postwise.utility.post.Post;
 import com.user.postwise.services.PostService;
 import org.springframework.web.bind.annotation.*;

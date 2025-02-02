@@ -2,68 +2,72 @@ package com.user.postwise.services;
 
 import com.user.postwise.dtos.RequestCommentdto;
 import com.user.postwise.dtos.ResponseCommentdto;
-import com.user.postwise.utility.comment.Comment;
-import com.user.postwise.utility.post.Post;
+import com.user.postwise.models.Comment;
+import com.user.postwise.models.Post;
+import com.user.postwise.repositories.CommentRepository;
+import com.user.postwise.repositories.PostRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
-import static com.user.postwise.controllers.PostController.db;
 
 @Service
 public class CommentService {
+    private final CommentRepository commentRepository;
+    private final PostRepository postRepository;
+    public CommentService(CommentRepository commentRepository, PostRepository postRepository) {
+        this.commentRepository = commentRepository;
+        this.postRepository = postRepository;
+    }
 
     public List<RequestCommentdto> getCommentsByPostId(Long postId){
-        Post p=db.get(postId);
+        Optional<Post> p= postRepository.findById(postId);
         List<RequestCommentdto>response=new ArrayList<>();
-        for(Comment c:p.getComments()){
-            RequestCommentdto r=new RequestCommentdto();
-            r.setCommentary(c.getCommentary());
-            response.add(r);
-
+        if(p.isPresent()) {
+            for (Comment c : p.get().getComments()) {
+                RequestCommentdto r = new RequestCommentdto();
+                r.setCommentary(c.getCommentary());
+                response.add(r);
+            }
+        }else{
+            throw new NullPointerException("Cannot get comments as Post with " +postId+" not found");
         }
         return response;
     }
 
     public ResponseCommentdto createComment(RequestCommentdto commentary){
-        Post p=db.get(commentary.getPostId());
-        Comment c= new Comment(p);
+        Optional<Post> p= postRepository.findById(commentary.getPostId());
+        if(p.isPresent()) {
+            Comment comment = new Comment();
+            comment.setPostId(p.get());
+            comment.setCommentary(commentary.getCommentary());
+            commentRepository.save(comment);
+        }else{
+            throw new NullPointerException("Cannot create a comment with " +commentary.getPostId()+" not found");
+        }
         ResponseCommentdto response=new ResponseCommentdto();
-        c.setCommentary(commentary.getCommentary());
-        p.addComment(c);
         response.setComment(commentary.getCommentary());
-        response.setResponse("Post created successfully");
+        response.setResponse("Comment added successfully");
         return response;
     }
 
-    public RequestCommentdto updateComment(RequestCommentdto comment){
-        Post p =db.get(comment.getPostId());
-       //got the post by post id and add update the comment to it
-       List<Comment> ls=p.getComments();
-       // here since we are using a map as our in-memory db we are not maintaining a separate map for comments
-        // ,so we need to iterate over comments list to the comment
-        // else we would be querying the comments table directly using comment id present in comment;
-       for(Comment c:ls) {
-           if (Objects.equals(comment.getId(), c.getId())) {
-               c.setCommentary(comment.getCommentary());
-               break;
-           }
-       }
-        return comment;
-    }
-    public String deleteComment(RequestCommentdto Comment){
-        // here since we are using a map as our in-memory db we are not maintaining a separate map for comments
-        // else we would be querying the comments table directly using comment id;
-        Post p=db.get(Comment.getPostId());
-        List<Comment> ls=p.getComments();
-        for(Comment c:ls) {
-            if (Objects.equals(Comment.getId(), c.getId())) {
-                ls.remove(c);
-                return "Comment deleted successfully";
-            }
+    public ResponseCommentdto updateComment(Long commentId){
+        Optional<Comment> c = commentRepository.findById(commentId);
+        ResponseCommentdto response=new ResponseCommentdto();
+        if(c.isPresent()) {
+            Comment p = c.get();
+            commentRepository.save(p);
+            response.setComment(p.getCommentary());
+            response.setResponse("Comment updated successfully");
+        }else{
+            throw new NullPointerException("Cannot update a comment with " +commentId+" not found");
         }
-        return "Comment not found";
+        return response;
+    }
+    public String deleteComment(Long commentId){
+        commentRepository.deleteById(commentId);
+        return "Comment deleted successfully";
     }
 }

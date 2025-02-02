@@ -26,15 +26,15 @@ public class CommentController {
         // adds a comment to a post
         return commentService.createComment(comment);
     }
-    @PutMapping
-    public RequestCommentdto updateComment(@RequestBody RequestCommentdto comment) {
+    @PutMapping("/{id}")
+    public ResponseCommentdto updateComment(@PathVariable("id") Long id) {
         // gets a comment by id and updates it
-        return commentService.updateComment(comment);
+        return commentService.updateComment(id);
     }
 
-    @DeleteMapping
-    public String deleteComment(@RequestBody RequestCommentdto comment) {
+    @DeleteMapping("/{id}")
+    public String deleteComment(@PathVariable("id") Long commentId) {
         // deletes comment by id
-        return commentService.deleteComment(comment);
+        return commentService.deleteComment(commentId);
     }
 }
